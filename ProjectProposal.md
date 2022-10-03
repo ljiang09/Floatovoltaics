@@ -21,6 +21,7 @@ We will be using a system of first-order linear ODE’s, which will be coupled. 
 Quantitative:
 * Increase comfort with creating and solving for ODEs
 * Learn how to use Python modeling libraries such as Plotly
+
 Qualitative:
 * Learn about floatovoltaics
 * Learn about shade balls
