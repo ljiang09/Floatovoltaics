@@ -1,3 +1,6 @@
+'''
+Insert docstrings here
+'''
 
 import math
 from scipy.integrate import odeint
@@ -6,6 +9,9 @@ import numpy as np
 
 
 def model(V, t, V_in, V_dam):
+    '''
+    Insert docstrings here
+    '''
     DENSITY = 1000  # Density of water (kg/m^3)
 
     # maximum humidity ratio of saturated air at the same temperature as the water surface (kg/kg)  (kg H2O in kg Dry Air)
@@ -30,10 +36,16 @@ def model(V, t, V_in, V_dam):
 
 
 def cfsToM3Hr(cfs):
+    '''
+    Insert docstrings here
+    '''
     return cfs * 0.028316846711688 * 3600
 
 
 def m3ToKm3(m3):
+    '''
+    Insert docstrings here
+    '''
     return m3 / (1000000000)
 
 
