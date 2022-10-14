@@ -72,7 +72,11 @@ Apparently you need to find partial pressure of water vapor in moist air. The eq
 https://www.engineeringtoolbox.com/docs/documents/816/psychrometric_chart_29inHg.pdf is the psychrometric chart in high res. Why are grains a unit now :0
 
 
-I ended up using the psychrometric chart (per emily's suggestion, thank you emily) to find the relationship between relative humidity, which I can easily google, and air temperature, which I can also easily google. I got 3 points for each month to get a nice spread of datapoints across the year, and for each point, I found the approximate value of the humidity ratio. This will then be converted into a ratio vs. time (days) plot. **In future iterations, it would be good to have more datapoints across multiple years to generate a more accurate model**.
+I ended up using the **psychrometric chart** (per emily's suggestion, thank you emily) to find the relationship between relative humidity, which I can easily google, and air temperature, which I can also easily google. I got 3 points for each month to get a nice spread of datapoints across the year, and for each point, I found the approximate value of the humidity ratio. This will then be converted into a ratio vs. time (days) plot. **In future iterations, it would be good to have more datapoints across multiple years to generate a more accurate model**.
+
+We just need one value for the humidity ratio for the MVP. For this, we will use an average relative humidity and dry bulb temperature for the month of July, since that's the hottest month for Lake Mead. 
+
+According to https://www.weatherwx.com/climate-averages/az/lake+mead.html, the average humidity in July was 21%. The temperature ranged from 83 to 100 degrees Fahrenheit, so to meet in the middle, we have 91.5 degrees. Following the psychrometric chart, we now have 45 GRAINS OF MOISTURE PER POUND OF DRY AIR for our humidity ratio. There are 7000 grains in one pound, so the ratio is 45/7000 = 0.00642857143.
 
 
 
