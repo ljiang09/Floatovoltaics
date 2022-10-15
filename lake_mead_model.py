@@ -47,16 +47,13 @@ def model(V, t, V_in, V_dam):
 def cfsToM3s(cfs):
     '''
     Converts cubic feet per second to meters cubed per hour.
-
-
     '''
     return cfs * 0.028316846711688
 
 
 def m3ToKm3(m3):
     '''
-    Convers meters cubed per hour to cubic feet per second.
-
+    Convert meters cubed to km cubed.
     '''
     return m3 / (1000000000)
 
@@ -64,17 +61,19 @@ def m3ToKm3(m3):
 V_in = cfsToM3s(11800)  # m^3 / s
 V_dam = cfsToM3s(9800)  # m^3 / s
 
-V_0 = 10000000000  # ! Placeholder, m^3
+# initial condition; lake mead's volume
+V_0 = 640000000  # m^3
 
+# represent the model time as seconds in a year
 t = np.linspace(0, 31536000)
 
 fig, ax = plt.subplots()
 
 for i, panel_area in enumerate(panel_areas):
-
     result.append(odeint(model, V_0, t, args=(V_in, V_dam)))
-    ax.plot(t/86400, m3ToKm3(result[i]), label=f'Panel Area = {panel_area}m^2')
+    ax.plot(t/86400, m3ToKm3(result[i]), label=f'Panel Area = {panel_area} '+r'$m^2$')
 
+ax.set_title('Volume of Lake Mead Over Time')
 ax.legend()
 ax.set_xlabel('Time (days)')
 ax.set_ylabel('Volume (km^3)')
