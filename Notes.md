@@ -1,5 +1,5 @@
 # Question
-How does the cost-effectiveness of floatovoltaics vs shade balls compare?
+How cost-effective is it to use solar panels to simultaneously prevent evaporation of Lake Mead and generate more electricity?
 
 
 # General notes
@@ -13,6 +13,13 @@ Abstract the overall shape of the lake to be a frustum.
 Consider temperature of the lake as well
 
 Height of water changes surface area which changes evaporation rate
+
+The outflow rates of the Hoover Dam is found here: https://www.usbr.gov/lc/region/g4000/24mo.pdf. This gives us the average outflow rate in cfs for the past 12 months. Taking the average of all those months gives 12280 cfs, or 347.73 m^3 / s.
+
+
+
+
+
 
 
 ## Relating evaporation rate to volume:
@@ -38,14 +45,15 @@ This gives us mass per hour of evaporation, but we want volume per hour because 
 
 V_h = Θ(x_s - x)A / density
 
-### We don't know the surface area yet, because it is an equation based on height of water. We need to abstract the shape of the lake to make it easier to perform calculations with, and from there come up with our own equation.
 
-Brooke is doing this rn
+### Volume calculations
+
+L = 10,000 m
+
+max_base = 64,000 m
 
 
 ### We also don't know x_s and x, since none of us are super famiilar with the concept of humidity.
-
-Lily is working on this rn
 
 Humidity ratio is the mass of water vapor in the air / the mass of dry air. According to the table in https://www.engineeringtoolbox.com/humidity-ratio-air-d_686.html, it is based on the temperature of the air.
 
@@ -63,13 +71,7 @@ A simple google search did not yield any results for the humidity ratio of Lake 
 
 Resources to look at:
 
-https://pubs.usgs.gov/of/2021/1022/ofr20211022.pdf has a plot on page 29 (39 in the pdf) for mean monthly vapor pressure
-difference. But we still need the exact values in addition to this difference.
-
-http://www.atmo.arizona.edu/students/courselinks/spring08/atmo336s1/courses/fall13/atmo551a/Site/ATMO_451a_551a_files/WaterVapor.pdf
-Apparently you need to find partial pressure of water vapor in moist air. The equation on page 1 tells you how to calculate that value based on other values.
-
-https://www.engineeringtoolbox.com/docs/documents/816/psychrometric_chart_29inHg.pdf is the psychrometric chart in high res. Why are grains a unit now :0
+https://www.engineeringtoolbox.com/docs/documents/816/psychrometric_chart_29inHg.pdf is the psychrometric chart in high res. 7000 grains = 1 pound
 
 
 I ended up using the **psychrometric chart** (per emily's suggestion, thank you emily) to find the relationship between relative humidity, which I can easily google, and air temperature, which I can also easily google. I got 3 points for each month to get a nice spread of datapoints across the year, and for each point, I found the approximate value of the humidity ratio. This will then be converted into a ratio vs. time (days) plot. **In future iterations, it would be good to have more datapoints across multiple years to generate a more accurate model**.
@@ -79,12 +81,8 @@ We just need one value for the humidity ratio for the MVP. For this, we will use
 According to https://www.weatherwx.com/climate-averages/az/lake+mead.html, the average humidity in July was 21%. The temperature ranged from 83 to 100 degrees Fahrenheit, so to meet in the middle, we have 91.5 degrees. Following the psychrometric chart, we now have 45 GRAINS OF MOISTURE PER POUND OF DRY AIR for our humidity ratio. There are 7000 grains in one pound, so the ratio is 45/7000 = 0.00642857143.
 
 
-
-
-
 Some things to note for future iterations:
 * the moisture holding capacity of air increases dramatically with temperature https://www.engineeringtoolbox.com/moisture-holding-capacity-air-d_281.html. So the humidity ratio equations may be inaccurate at higher temperatures.
-* 
 
 
 
@@ -104,5 +102,11 @@ Put useful websites or libraries in here!
 https://plotly.com - a plotting library (?) that bill fan claims is way better than matplot lib
 
 https://www.nps.gov/lake/learn/monitoring-the-river.htm - Colorado river stats. Bottom of page has nice links to charts
+
+https://www.solarpowerfam.com/cost-of-solar-panels-per-square-meter/ - Solar panel pricing by square meter
+
+https://www.usbr.gov/lc/region/g4000/hoover.pdf - hoover dam daily avg releases
+
+https://www.usbr.gov/lc/region/g4000/24mo.pdf - hoover dam monthly avg release flow (and evaporation loss data)
 
 ??? - rate of evaporation formula
