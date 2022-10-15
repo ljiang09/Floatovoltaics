@@ -8,8 +8,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 result = []
-panel_areas = [10000, 100000, 1000000] # m^2
+panel_areas = [0, 100000, 1000000, 10000000, 100000000] # m^2
 
+MAX_AREA = 640 * 1000000
+MAX_VOLUME = 32 * 1000000000
+MAX_HEIGHT = 100
+# LENGTH = math.sqrt(2*MAX_AREA*MAX_VOLUME/MAX_HEIGHT)  # meters
+LENGTH = 10000 # meters
+MAX_BASE = 64000 # meters
+ANGLE = 89.82 # degrees
 
 def model(V, t, V_in, V_dam):
     '''
@@ -20,12 +27,10 @@ def model(V, t, V_in, V_dam):
     # maximum humidity ratio of saturated air at the same temperature as the water surface (kg/kg)  (kg H2O in kg Dry Air)
     MAX_HUM_RATIO = 0.030
     HUM_RATIO = 0.015  # humidity ratio air (kg/kg) (kg H2O in kg Dry Air)
-    #! ^^ placeholder values
+    
+    area = 2*V / math.sqrt(V/(LENGTH*math.tan(math.radians(ANGLE))))
 
-    LENGTH = 3.18  # meters
-    area = (2*V) / math.sqrt(V/LENGTH)
-
-    v_air = 10  # m/s
+    v_air = 7  # m/s
 
     # kg / (m^2 * h)
     Theta = 25+(19*v_air)			# v_air = velocity of air
@@ -65,10 +70,10 @@ t = np.linspace(0, 31536000)
 
 fig, ax = plt.subplots()
 
-for i, panel_area in panel_areas:
+for i, panel_area in enumerate(panel_areas):
 
-    result[i] = odeint(model, V_0, t, args=(V_in, V_dam))
-    ax.plot(t/86400, m3ToKm3(result), label=f'Panel Area = {panel_area}m^2')
+    result.append(odeint(model, V_0, t, args=(V_in, V_dam)))
+    ax.plot(t/86400, m3ToKm3(result[i]), label=f'Panel Area = {panel_area}m^2')
 
 ax.legend()
 ax.set_xlabel('Time (days)')
