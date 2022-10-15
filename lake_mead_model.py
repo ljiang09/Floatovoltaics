@@ -7,6 +7,16 @@ from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 import numpy as np
 
+result = []
+panel_areas = [0, 100000, 1000000, 10000000, 100000000] # m^2
+
+MAX_AREA = 640 * 1000000
+MAX_VOLUME = 32 * 1000000000
+MAX_HEIGHT = 100
+# LENGTH = math.sqrt(2*MAX_AREA*MAX_VOLUME/MAX_HEIGHT)  # meters
+LENGTH = 10000 # meters
+MAX_BASE = 64000 # meters
+ANGLE = 89.82 # degrees
 
 def model(V, t, V_in, V_dam):
     '''
@@ -17,21 +27,19 @@ def model(V, t, V_in, V_dam):
     # maximum humidity ratio of saturated air at the same temperature as the water surface (kg/kg)  (kg H2O in kg Dry Air)
     MAX_HUM_RATIO = 0.030
     HUM_RATIO = 0.015  # humidity ratio air (kg/kg) (kg H2O in kg Dry Air)
-    #! ^^ placeholder values
+    
+    area = 2*V / math.sqrt(V/(LENGTH*math.tan(math.radians(ANGLE))))
 
-    LENGTH = 3.18  # meters
-    area = (2*V) / math.sqrt(V/LENGTH)
-
-    v_air = 10  # m/s
+    v_air = 7  # m/s
 
     # kg / (m^2 * h)
     Theta = 25+(19*v_air)			# v_air = velocity of air
 
     # this will be a function of surface area, which we can calculate from V/h
-    V_evap = Theta*area*(MAX_HUM_RATIO - HUM_RATIO) / (DENSITY * 3600)
+    V_evap = Theta*(area-panel_area)*(MAX_HUM_RATIO - HUM_RATIO) / (DENSITY * 3600)
     
-    # dVdt = V_in - V_dam - V_evap
-    dVdt = V_evap
+    dVdt = V_in - V_dam - V_evap
+    # dVdt = V_evap
     print(V_evap/V_in)
     return dVdt
 
@@ -60,10 +68,13 @@ V_0 = 10000000000  # ! Placeholder, m^3
 
 t = np.linspace(0, 31536000)
 
-result = odeint(model, V_0, t, args=(V_in, V_dam))
-
 fig, ax = plt.subplots()
-ax.plot(t/86400, m3ToKm3(result), label='V_0 = 10km^3')
+
+for i, panel_area in enumerate(panel_areas):
+
+    result.append(odeint(model, V_0, t, args=(V_in, V_dam)))
+    ax.plot(t/86400, m3ToKm3(result[i]), label=f'Panel Area = {panel_area}m^2')
+
 ax.legend()
 ax.set_xlabel('Time (days)')
 ax.set_ylabel('Volume (km^3)')
