@@ -104,7 +104,7 @@ t = np.linspace(0, 31536000*10, num = 59)
 
 plt.figure(1)
 plt.plot(t/86400, m3ToKm3(odeint(costs, V_0, t, args=(V_in, V_dam, panel_areas[0]))), label=f'Panel Area = {panel_areas[0]} '+r'$m^2$')
-plt.title('piss')
+plt.title('Volume of Lake Mead Over 10 Years')
 plt.xlabel('Time (days)')
 plt.ylabel('Volume '+r'($km^3$)')
 
@@ -112,7 +112,7 @@ print(len(t))
 
 plt.figure(2)
 plt.plot(t/86400, change_in_costs)
-plt.title('shit')
+plt.title('Change in revenue for Lake Mead over 10 Years')
 plt.xlabel('Time (days)')
 plt.ylabel('Cost ($)')
 
