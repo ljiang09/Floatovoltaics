@@ -10,7 +10,7 @@ import numpy as np
 result = []
 # In descending order for legend order
 panel_areas = [600000000, 100000000, 50000000, 25000000, 10000000, 1000000, 100000] # m^2
-change_in_costs = []
+overall_costs = []
 
 MAX_AREA = 640 * 1000000  # m^2
 MAX_VOLUME = 32 * 1000000000  # m^3
@@ -52,6 +52,8 @@ def costs(V, t, V_in, V_dam, panel_area):
     dVdt = V_in - V_dam - V_evap
 
     panel_price = panel_area*PANEL_COST
+    if len(overall_costs) == 0:
+        overall_costs.append(-panel_price)
 
     panel_electricity_price = PANEL_KWATTS_PER_SECOND*ELECTRICITY_COST*panel_area  # total dollar price of electricity for 1 second
 
@@ -59,7 +61,8 @@ def costs(V, t, V_in, V_dam, panel_area):
 
     dCdt = panel_electricity_price + dVdt*WATER_COST
 
-    change_in_costs.append(dCdt[0])
+    print(overall_costs[-1])
+    overall_costs.append(overall_costs[-1] + dCdt[0])
 
     # print(dCdt)
     return dVdt
@@ -95,29 +98,28 @@ V_dam = cfsToM3s(10083.3102)  # m^3 / s
 V_0 = MAX_VOLUME  # m^3
 
 # represent the model time as seconds in 10 years
-t = np.linspace(0, 31536000*10, num = 59)
+t = np.linspace(0, 31536000*10, num = 60)
 
 
 # for i, panel_area in enumerate(panel_areas):
 #     result.append(odeint(costs, V_0, t, args=(V_in, V_dam, panel_area)))
 #     ax.plot(t/86400, m3ToKm3(result[i]), label=f'Panel Area = {panel_area} '+r'$m^2$')
 
+panel_area = panel_areas[0]
 plt.figure(1)
-plt.plot(t/86400, m3ToKm3(odeint(costs, V_0, t, args=(V_in, V_dam, panel_areas[0]))), label=f'Panel Area = {panel_areas[0]} '+r'$m^2$')
-plt.title('Volume of Lake Mead Over 10 Years')
+plt.plot(t/86400, m3ToKm3(odeint(costs, V_0, t, args=(V_in, V_dam, panel_area))), label=f'Panel Area = {panel_area} '+r'$m^2$')
+plt.title(f'Volume of Lake Mead Over 10 Years with panel\narea {panel_area} '+r'$m^2$')
 plt.xlabel('Time (days)')
 plt.ylabel('Volume '+r'($km^3$)')
 
-print(len(t))
-
 plt.figure(2)
-plt.plot(t/86400, change_in_costs)
-plt.title('Change in revenue for Lake Mead over 10 Years')
+plt.plot(t/86400, overall_costs)
+plt.title(f'Change in revenue for Lake Mead over 10 Years with\npanel area {panel_area} '+r'$m^2$')
 plt.xlabel('Time (days)')
-plt.ylabel('Cost ($)')
+plt.ylabel('Cost (USD)')
 
 # odeint(costs, V_0, t, args=(V_in, V_dam, panel_areas[0]))
-# plt.plot(t/86400, change_in_costs)
+# plt.plot(t/86400, overall_costs)
 
 # ax.set_title(f'Volume of Lake Mead With Solar Panels of area {panel_areas[0]} Over 10 Years')
 # ax.legend()
