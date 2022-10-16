@@ -18,10 +18,6 @@ The outflow rates of the Hoover Dam is found here: https://www.usbr.gov/lc/regio
 
 
 
-
-
-
-
 ## Relating evaporation rate to volume:
 https://www.engineeringtoolbox.com/evaporation-water-surface-d_690.html
 
@@ -85,6 +81,10 @@ Some things to note for future iterations:
 * the moisture holding capacity of air increases dramatically with temperature https://www.engineeringtoolbox.com/moisture-holding-capacity-air-d_281.html. So the humidity ratio equations may be inaccurate at higher temperatures.
 
 
+## Solar panels
+
+Depending on where we place the solar panels, we will have to stop subtracting it out from the surface area. And as the lake volume decreases, we pretend that the solar panels stay at the water level height
+
 
 # Action items
 make a stock and flow diagram
@@ -93,7 +93,21 @@ Rain -> streams/rivers -> lake mead -> evaporation and dam outflow
 
 create a system of equations to solve lake volume and height as a function fo time
 
-possibly bring in the shade balls as part of the model
+
+SATURDAY, OCT 15
+Cost of solar panels - money we get from selling the energy
+
+^Compare to the lost value of the water evaporating
+
+This tells us if it's worth it to spend the money on panels
+
+Sweep through volume rn for how many solar panels vs ___
+
+Look into conversion factors for how much lost water is worth to us. How much solar generation 
+
+Lily: keep wroking on report
+
+Brooke: get plotly working. Put code into jupyter notebook
 
 
 # Resources
