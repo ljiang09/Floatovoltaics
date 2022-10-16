@@ -8,11 +8,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 result = []
-panel_areas = [0, 100000, 1000000, 10000000, 100000000] # m^2
+# In descending order for legend order
+panel_areas = [100000000, 50000000, 25000000, 10000000, 1000000, 100000, 0] # m^2
 
-MAX_AREA = 640 * 1000000
-MAX_VOLUME = 32 * 1000000000
-MAX_HEIGHT = 100
+MAX_AREA = 640 * 1000000  # m^2
+MAX_VOLUME = 32 * 1000000000  # m^3
+MAX_HEIGHT = 100  # m
 # LENGTH = math.sqrt(2*MAX_AREA*MAX_VOLUME/MAX_HEIGHT)  # meters
 LENGTH = 10000 # meters
 MAX_BASE = 64000 # meters
@@ -59,7 +60,8 @@ def m3ToKm3(m3):
 
 
 V_in = cfsToM3s(11800)  # m^3 / s
-V_dam = cfsToM3s(9800)  # m^3 / s
+V_dam = cfsToM3s(10083.3102)  # m^3 / s
+
 
 # initial condition; lake mead's volume
 V_0 = 640000000  # m^3

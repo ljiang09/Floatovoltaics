@@ -14,9 +14,11 @@ Consider temperature of the lake as well
 
 Height of water changes surface area which changes evaporation rate
 
-The outflow rates of the Hoover Dam is found here: https://www.usbr.gov/lc/region/g4000/24mo.pdf. This gives us the average outflow rate in cfs for the past 12 months. Taking the average of all those months gives 12280 cfs, or 347.73 m^3 / s.
+The outflow rates of the Hoover Dam is found here: https://www.nps.gov/lake/learn/nature/overview-of-lake-mead.htm#:~:text=Lake%20Mead%20is%20fed%20by,miles%20upstream%20of%20Hoover%20Dam. This gives us the total outflow rate for the past 12 months: 7.3 x 10^6 * 43559.9 ft^3 per year. This can be converted all the way to cfs and m^3 / s, which is 10083.3102 cfs = 285.53 m^3.
 
+The mean depth of the lake is 55.5 m (https://www.nps.gov/lake/learn/nature/overview-of-lake-mead.htm#:~:text=Lake%20Mead%20is%20fed%20by,miles%20upstream%20of%20Hoover%20Dam)
 
+Lake mead is also partially fueled by Las Vegas wash, at 287 cfs (https://www.nps.gov/lake/learn/nature/overview-of-lake-mead.htm#:~:text=Lake%20Mead%20is%20fed%20by,miles%20upstream%20of%20Hoover%20Dam)
 
 ## Relating evaporation rate to volume:
 https://www.engineeringtoolbox.com/evaporation-water-surface-d_690.html
