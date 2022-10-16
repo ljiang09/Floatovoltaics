@@ -9,10 +9,10 @@ import numpy as np
 
 result = []
 # In descending order for legend order
-panel_areas = [100000000, 50000000, 25000000, 10000000, 1000000, 100000, 0] # m^2
+panel_areas = [640000000, 600000000, 500000000, 100000000, 10000000, 1000000, 100000, 0] # m^2
 
-MAX_AREA = 640 * 1000000  # m^2
-MAX_VOLUME = 32 * 1000000000  # m^3
+MAX_AREA = 640000000  # m^2
+MAX_VOLUME = 32.24 * 1000000000  # m^3
 MAX_HEIGHT = 100  # m
 # LENGTH = math.sqrt(2*MAX_AREA*MAX_VOLUME/MAX_HEIGHT)  # meters
 LENGTH = 10000 # meters
@@ -28,7 +28,7 @@ def model(V, t, V_in, V_dam):
     # maximum humidity ratio of saturated air at the same temperature as the water surface (kg/kg)  (kg H2O in kg Dry Air)
     MAX_HUM_RATIO = 0.030
     HUM_RATIO = 0.015  # humidity ratio air (kg/kg) (kg H2O in kg Dry Air)
-    
+
     area = 2*V / math.sqrt(V/(LENGTH*math.tan(math.radians(ANGLE))))
 
     v_air = 7  # m/s
@@ -41,7 +41,7 @@ def model(V, t, V_in, V_dam):
     
     dVdt = V_in - V_dam - V_evap
     # dVdt = V_evap
-    print(V_evap/V_in)
+    # print(V_evap/V_in)
     return dVdt
 
 
@@ -62,12 +62,11 @@ def m3ToKm3(m3):
 V_in = cfsToM3s(11800)  # m^3 / s
 V_dam = cfsToM3s(10083.3102)  # m^3 / s
 
-
-# initial condition; lake mead's volume
-V_0 = 640000000  # m^3
+# initial condition; lake mead's volume at t = 0
+V_0 = MAX_VOLUME  # m^3
 
 # represent the model time as seconds in a year
-t = np.linspace(0, 31536000)
+t = np.linspace(0, 31536000*10)
 
 fig, ax = plt.subplots()
 
@@ -75,7 +74,7 @@ for i, panel_area in enumerate(panel_areas):
     result.append(odeint(model, V_0, t, args=(V_in, V_dam)))
     ax.plot(t/86400, m3ToKm3(result[i]), label=f'Panel Area = {panel_area} '+r'$m^2$')
 
-ax.set_title('Volume of Lake Mead Over Time')
+ax.set_title('Volume of Lake Mead Over 10 Years')
 ax.legend()
 ax.set_xlabel('Time (days)')
 ax.set_ylabel('Volume (km^3)')
