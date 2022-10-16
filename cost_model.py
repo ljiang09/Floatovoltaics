@@ -16,7 +16,6 @@ overall_costs = []
 MAX_AREA = 640 * 1000000  # m^2
 MAX_VOLUME = 32 * 1000000000  # m^3
 MAX_HEIGHT = 100  # m
-# LENGTH = math.sqrt(2*MAX_AREA*MAX_VOLUME/MAX_HEIGHT)  # meters
 LENGTH = 10000 # meters
 MAX_BASE = 64000 # meters
 ANGLE = 89.82 # degrees
