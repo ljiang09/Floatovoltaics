@@ -69,13 +69,13 @@ def m3ToKm3(m3):
     return m3 / (1000000000)
 
 
-times = [100, 365, 365*2, 365*5, 365*7, 365*10]  # days
+times = [100, 365, 365*2, 365*5, 2550, 365*10]  # days
 
 V_in = cfsToM3s(11800)  # m^3 / s
 V_dam = cfsToM3s(10083.3102)  # m^3 / s
 V_0 = MAX_VOLUME  # m^3
 
-# sweep the panel areas
+# sweep the panel areas, and the specified amounts of time
 plt.figure(1)
 for time in times:
     cost_values = []
@@ -85,12 +85,12 @@ for time in times:
         panel_electricity_price = PANEL_KWATTS_PER_SECOND*ELECTRICITY_COST*panel_area  # total dollar price of electricity for 1 second
         cost = panel_electricity_price - panel_area*PANEL_COST + volume*WATER_COST
         cost_values.append(cost)
-    plt.plot(panel_areas, cost_values, '.')
-    print(cost_values)
+    plt.plot(panel_areas, cost_values, '.', label = f'{time} days')
 
 
-plt.title('Overall costs after one year of having solar panels')
-plt.xlabel('Panel Size')
-plt.ylabel('Cost')
+plt.legend()
+plt.title('Overall monetary value of Lake Mead after various\namounts of time of having solar panels')
+plt.xlabel('Panel Size (' + r'$m^2$' + ')')
+plt.ylabel('Cost (USD)')
 
 plt.show()
