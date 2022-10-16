@@ -18,7 +18,7 @@ The outflow rates of the Hoover Dam is found here: https://www.nps.gov/lake/lear
 
 The mean depth of the lake is 55.5 m (https://www.nps.gov/lake/learn/nature/overview-of-lake-mead.htm#:~:text=Lake%20Mead%20is%20fed%20by,miles%20upstream%20of%20Hoover%20Dam)
 
-Lake mead is also partially fueled by Las Vegas wash, at 287 cfs (https://www.nps.gov/lake/learn/nature/overview-of-lake-mead.htm#:~:text=Lake%20Mead%20is%20fed%20by,miles%20upstream%20of%20Hoover%20Dam)
+Lake mead is also partially fueled by Las Vegas wash, at 287 cfs (https://www.nps.gov/lake/learn/nature/overview-of-lake-mead.htm#:~:text=Lake%20Mead%20is%20fed%20by,miles%20upstream%20of%20Hoover%20Dam) [note: we didn't include this in the actual code]
 
 ## Relating evaporation rate to volume:
 https://www.engineeringtoolbox.com/evaporation-water-surface-d_690.html
@@ -85,7 +85,20 @@ Some things to note for future iterations:
 
 ## Solar panels
 
-Depending on where we place the solar panels, we will have to stop subtracting it out from the surface area. And as the lake volume decreases, we pretend that the solar panels stay at the water level height
+"The cost of solar panels per square meter may vary from $40 to $110" (https://www.solarpowerfam.com/cost-of-solar-panels-per-square-meter/). We decided to take the midpoint of this range, which was $75 per square meter.
+
+The cost of water in Lake mead will need to be decided using personal intuition. 25 million ppl get water from the lake (https://www.nytimes.com/2022/07/22/climate/lake-mead-level-pictures.html#:~:text=Lake%20Mead%2C%20the%20largest%20reservoir,the%20country's%20largest%20agricultural%20valleys). 
+
+"on average, each person uses about 80-100 gallons of water per day" (https://www.usgs.gov/special-topics/water-science-school/science/water-qa-how-much-water-do-i-use-home-each-day). Let's say 90 gallons is typical (to abstract this to a single number). 90 gallons = 0.340687 m^3 of water used per person per day. Therefore, the total amount of water from Lake Mead that is used each day is 25000000*0.340687 = 8517175 m^3.
+
+Now let's find the cost of water bills in the states that get water from lake mead. These states are California, Arizona, Colorado, Utah, New Mexico, Nevada and Wyoming (https://www.kunc.org/environment/2022-07-19/on-the-colorado-river-the-feds-carry-a-big-stick-will-the-states-get-hit#:~:text=That%20infrastructure%20includes%20the%20Colorado,New%20Mexico%2C%20Nevada%20and%20Wyoming). The water bills for these states is 77, 64, 39, 38, 32, 26, 53 (https://worldpopulationreview.com/state-rankings/water-prices-by-state). Taking the average of this gives 47 dollars per month, or 1.51612903 dollars per day. If each person uses 0.340687 m^3 of water per day, then 0.340687 m^3 of water is worth $1.51612903. This means that each cubic meter of water is worth $4.45021099. Each day, the 25 million people spend 8517175 * 4.45021099 = $37903225.8 on water. 
+
+Standard 400W solar panels produce 1800 Watts per hour (https://www.solar.com/learn/how-much-energy-does-a-solar-panel-produce/). 
+Although this is impacted by the day-night cycle, we'll abstract this to having constant production. With 86400 seconds per day, the panel
+
+400W solar panels are typically 72-cell (https://news.energysage.com/what-is-the-power-output-of-a-solar-panel/), which is 3.25 feet by 6.42 feet (https://airisenergy.us/solar-panels-dimensions/#:~:text=The%20average%2072%2Dcell%20solar,60%2Dcell%20standard%20size%20panels.) 3.25 feet by 6.42 feet = 20.865 ft^2 = 1.93842193 m^2. 1.93842193 m^2 of solar panels produces 1800 Watts per hour. Therefore, 1 square meter of panels produces 928.59 watts per hour. We need units of W/s, because the linear space for the ODE is every second. 928.59 / 3600 = 0.257941667 W/s / m^2.
+
+Electricity costs (Cents per Kilowatthour) by state are found here: https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a. For California, Arizona, Colorado, Utah, New Mexico, Nevada and Wyoming: 24.19, 11.98, 12.51, 9.43, 11.31, 11.58, 8.51. The average of these values is: 89.51/7 = 12.7871428571 cents / kwh. Again we need units in seconds, so (12.7871428571 cents / kwh) * (1 kwh / 3600 kws) * (1 kws / 1000 w/s) = 0.00000355198413 cents/W-s = 0.0000000355198413 dollars per W/s. This is the average value of electricity. We can figure out how much revenue one squre meter of panels generates from the electricity it produces. 0.0000000355198413 $/(W/s) * 0.257941667 (W/s) / m^2 = 9.16204708 * 10^-9 $/m^2.
 
 
 # Action items
