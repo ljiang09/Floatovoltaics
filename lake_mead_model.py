@@ -27,7 +27,7 @@ def model(V, t, V_in, V_dam):
 
     # maximum humidity ratio of saturated air at the same temperature as the water surface (kg/kg)  (kg H2O in kg Dry Air)
     MAX_HUM_RATIO = 0.030
-    HUM_RATIO = 0.015  # humidity ratio air (kg/kg) (kg H2O in kg Dry Air)
+    HUM_RATIO = 0.00642857143  # humidity ratio air (kg/kg) (kg H2O in kg Dry Air)
 
     area = 2*V / math.sqrt(V/(LENGTH*math.tan(math.radians(ANGLE))))
 
