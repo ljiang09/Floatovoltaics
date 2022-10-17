@@ -68,7 +68,7 @@ def m3ToKm3(m3):
     return m3 / (1000000000)
 
 
-times = [100, 365, 365*2, 365*5, 2550, 365*10]  # days
+times = [86400*100, 86400*365, 86400*365*2, 86400*365*5, 86400*2550, 86400*365*10]  # seconds
 
 V_in = cfsToM3s(11800)  # m^3 / s
 V_dam = cfsToM3s(10083.3102)  # m^3 / s
@@ -84,7 +84,7 @@ for time in times:
         panel_electricity_price = PANEL_KWATTS_PER_SECOND*ELECTRICITY_COST*panel_area  # total dollar price of electricity for 1 second
         cost = panel_electricity_price - panel_area*PANEL_COST + volume*WATER_COST
         cost_values.append(cost)
-    plt.plot(panel_areas, cost_values, '.', label = f'{time} days')
+    plt.plot(panel_areas, cost_values, '.', label = f'{time/86400} days')
 
 
 plt.legend()
@@ -93,3 +93,4 @@ plt.xlabel('Panel Size (' + r'$m^2$' + ')')
 plt.ylabel('Cost (USD)')
 
 plt.show()
+
